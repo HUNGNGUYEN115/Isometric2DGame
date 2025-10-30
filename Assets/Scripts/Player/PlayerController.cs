@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static EnemyAI;
 public class PlayerControllers : MonoBehaviour
 {
     public Rigidbody2D rb;
@@ -9,11 +10,25 @@ public class PlayerControllers : MonoBehaviour
     private InputAction move;
     private InputAction fire;
     public Animator animator;
+    private SpriteRenderer spriteRenderer;
 
-    
+    //Health
+    public HealthBar healthBar;
+    public int maxHealth = 20;
+    public int currentHealth;
+
+
     private void Awake()
     {
+        //Max health at start
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
         PlayerControls = new PlayerInputAction();
+    }
+    void Start()
+    {
+
+         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void OnEnable()
     {
@@ -31,10 +46,7 @@ public class PlayerControllers : MonoBehaviour
         move.Disable();
         fire.Disable();
     }
-    void Start()
-    {
-        
-    }
+   
 
     // Update is called once per frame
     void Update()
@@ -51,13 +63,32 @@ public class PlayerControllers : MonoBehaviour
         // Rotate to face movement direction (only if moving)
         // Flip left/right
         if (moveDirection.x > 0.01f)
-            transform.localScale = new Vector3(1, 1, 1);   // face right
+            spriteRenderer.flipX = false;   // face right
         else if (moveDirection.x < -0.01f)
-            transform.localScale = new Vector3(-1, 1, 1);  // face left
+            spriteRenderer.flipX = true;   // face left
     }
   
     private void Fire(InputAction.CallbackContext context)
     {
         Debug.Log("Fire!!!!");
+    }
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+        if (currentHealth <= 0)
+        {
+
+            Die();
+            
+        }
+    }
+    public void Die()
+    {
+        
+        animator.SetBool("Dead", true);
+        spriteRenderer.color = Color.gray;
+        Destroy(gameObject, 1f);
+
     }
 }

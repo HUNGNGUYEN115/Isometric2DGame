@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
+using JetBrains.Annotations;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -21,15 +23,21 @@ public class EnemyAI : MonoBehaviour
     private Color attackColor;
 
     //condition for changing states
-    private bool playerInRange = false;
+    public bool playerInRange = false;
 
     //costume animation and sprite
     private SpriteRenderer spriteRenderer;
     public Animator animator;
     //Pathfinding
     NavMeshAgent agent;
-
-    
+    public PlayerControllers playerControllers;
+    private bool isAttacking = false;
+    //Health
+    public HealthBar healthBar;
+    public int maxHealth = 20;
+    private int currentHealth;
+    public bool isdead=false;
+    public int Damage = 10;
     private void Start()
     {
         //Change colors with hex code
@@ -44,6 +52,13 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation= false;
         agent.updateUpAxis = false;
+
+        //Max health at start
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+       
+
+
     }
 
     private void Update()
@@ -136,29 +151,62 @@ public class EnemyAI : MonoBehaviour
 
     private void Attack()
     {
+        if (isAttacking) return;
+        isAttacking = true;
         agent.isStopped = true; // Stop moving while attacking
         Debug.Log("Attacking player!");
+        playerControllers.TakeDamage(Damage);
+        StartCoroutine(Afterattack());
+
+
+    }
+    IEnumerator Afterattack()
+    {
+        Debug.Log("after Attack !");
+
+        yield return new WaitForSeconds(2f);
+        isAttacking=false;
+        ChangeState(EnemyState.Idle);
     }
 
 
     // Detection
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        
+        if (other.CompareTag("Bullet"))
         {
-            playerInRange = true;
-            ChangeState(EnemyState.Chase);
+            animator.SetBool("Hit",true);
+            Destroy(other.gameObject);
+            TakeDamage(10);
         }
+
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public void TakeDamage(int damage)
     {
-        if (other.CompareTag("Player"))
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+        if (currentHealth<=0)
         {
-            playerInRange = false;
-            ChangeState(EnemyState.Patrol);
+
+            Die();
+            isdead = true;
         }
     }
 
-   
+    public void Die()
+    {
+        ChangeState(EnemyState.Idle);
+        agent.isStopped = true;
+        animator.SetBool("Dead", true);
+        spriteRenderer.color = Color.gray;
+
+        
+        
+        Destroy(gameObject, 1f);
+
+    }
+
+
 }
