@@ -70,7 +70,7 @@ public class PlayerControllers : MonoBehaviour
   
     private void Fire(InputAction.CallbackContext context)
     {
-        Debug.Log("Fire!!!!");
+       
     }
     public void TakeDamage(int damage)
     {
@@ -90,5 +90,11 @@ public class PlayerControllers : MonoBehaviour
         spriteRenderer.color = Color.gray;
         Destroy(gameObject, 1f);
 
+    }
+    public void Health(int health)
+
+    {
+        currentHealth += health;
+        healthBar.SetHealth(currentHealth);
     }
 }
