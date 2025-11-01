@@ -38,6 +38,8 @@ public class EnemyAI : MonoBehaviour
     private int currentHealth;
     public bool isdead=false;
     public int Damage = 10;
+    public float pushForce = 5f;
+   
     private void Start()
     {
         //Change colors with hex code
@@ -154,15 +156,17 @@ public class EnemyAI : MonoBehaviour
         if (isAttacking) return;
         isAttacking = true;
         agent.isStopped = true; // Stop moving while attacking
-        Debug.Log("Attacking player!");
+        
         playerControllers.TakeDamage(Damage);
+        
+      
         StartCoroutine(Afterattack());
 
 
     }
     IEnumerator Afterattack()
     {
-        Debug.Log("after Attack !");
+        
 
         yield return new WaitForSeconds(2f);
         isAttacking=false;
@@ -178,7 +182,7 @@ public class EnemyAI : MonoBehaviour
         {
             animator.SetBool("Hit",true);
             Destroy(other.gameObject);
-            TakeDamage(10);
+            TakeDamage(playerControllers.damage)  ;
         }
 
     }
@@ -199,11 +203,9 @@ public class EnemyAI : MonoBehaviour
     {
         ChangeState(EnemyState.Idle);
         agent.isStopped = true;
+        
         animator.SetBool("Dead", true);
         spriteRenderer.color = Color.gray;
-
-        
-        
         Destroy(gameObject, 1f);
 
     }

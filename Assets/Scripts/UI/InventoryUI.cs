@@ -3,15 +3,18 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using System;
+using UnityEngine.EventSystems;
 
 
 public class InventoryUI : MonoBehaviour
 {
     public InventorySystem inventorySystem;
     public Button useButton;
+    public Button dropButton;
     public List<Button> slotButtons;
     public Sprite defaultSprite;
-    public int selectedslot=-1;
+    public int selectedslot;
+    public GameObject Infopanel;
 
     private void OnEnable()
     {
@@ -27,7 +30,7 @@ public class InventoryUI : MonoBehaviour
 
     private void UpdateUI(Items newItem)
     {
-        Debug.Log($"Updating UI for {newItem.itemname}"); //  Debug here
+        
 
         foreach (Button slot in slotButtons)
         {
@@ -50,20 +53,49 @@ public class InventoryUI : MonoBehaviour
         if (img.sprite != null && img.sprite != defaultSprite)
         {
             useButton.interactable = true;
-            
+            dropButton.interactable = true;
+            Infopanel.SetActive(true);
+
+
         }
         else
         {
             useButton.interactable = false;
-            
+            dropButton.interactable = false;
+            Infopanel.SetActive(false);
+
         }
     }
-    public void UseSelectedItem(PlayerControllers player)
+    public void UseSelectedItem()
     {
-        inventorySystem.UseItem(selectedslot-1, player);
+        inventorySystem.UseItem(selectedslot-1);
         Image img = slotButtons[selectedslot - 1].GetComponent<Image>();
         img.sprite = defaultSprite;
         useButton.interactable = false;
+        dropButton.interactable = false;
 
+    }
+    public void DropSelectedItem()
+    {
+        inventorySystem.DropItem(selectedslot - 1);
+        Image img = slotButtons[selectedslot - 1].GetComponent<Image>();
+        img.sprite = defaultSprite;
+        useButton.interactable = false;
+        dropButton.interactable = false;
+
+    }
+
+    public void ShowItemInfo(int index)
+    {
+        if (index < 0 || index >= inventorySystem.inventory.Count)
+            return;
+
+        inventorySystem.Infoitem(index);
+        Infopanel.SetActive(true);
+    }
+
+    public void HideItemInfo()
+    {
+        Infopanel.SetActive(false);
     }
 }

@@ -13,7 +13,7 @@ public class PlayerAim : MonoBehaviour
     //Firing
     public Transform firepoint;
     public GameObject bulletPrefab;
-    public float bulletSpeed=10f;
+    private float bulletSpeed=10f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()

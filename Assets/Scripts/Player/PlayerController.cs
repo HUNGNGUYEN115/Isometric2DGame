@@ -17,7 +17,9 @@ public class PlayerControllers : MonoBehaviour
     public int maxHealth = 20;
     public int currentHealth;
 
-
+    //Gun
+    public int damage;
+    public GameObject weapon;
     private void Awake()
     {
         //Max health at start
@@ -37,14 +39,14 @@ public class PlayerControllers : MonoBehaviour
 
         fire = PlayerControls.Player.Fire;
         fire.Enable();
-        fire.performed += Fire;
+        
 
     }
     
     private void OnDisable()
     {
         move.Disable();
-        fire.Disable();
+        
     }
    
 
@@ -67,11 +69,7 @@ public class PlayerControllers : MonoBehaviour
         else if (moveDirection.x < -0.01f)
             spriteRenderer.flipX = true;   // face left
     }
-  
-    private void Fire(InputAction.CallbackContext context)
-    {
-       
-    }
+ 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -87,14 +85,29 @@ public class PlayerControllers : MonoBehaviour
     {
         
         animator.SetBool("Dead", true);
-        spriteRenderer.color = Color.gray;
+        Destroy(weapon);
         Destroy(gameObject, 1f);
+        PlayerControls.Disable();
 
     }
     public void Health(int health)
 
     {
-        currentHealth += health;
-        healthBar.SetHealth(currentHealth);
+        if (currentHealth < maxHealth)
+        {
+            currentHealth += health;
+            healthBar.SetHealth(currentHealth);
+
+
+        }
+        else if (currentHealth + health > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        else
+        {
+            Debug.Log("You are full");
+        }
+        
     }
 }

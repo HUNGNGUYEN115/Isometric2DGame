@@ -4,8 +4,9 @@ public class HealthPotion : Items
 {
     
     public int healamount;
-
-   public override void Use()
+    public GameObject potion;
+    
+    public override void Use()
     {
         
     }

@@ -8,25 +8,26 @@ public class OpenUI : MonoBehaviour
     public bool isOpen = false;
     private InputAction Button;
    
-    private PlayerInputAction playerInput;
+    public PlayerInputAction PlayerControls;
     public GameObject inventoryPanel;
     void Start()
     {
-       inventoryPanel.SetActive(false);
         isOpen = false;
+        inventoryPanel.SetActive(isOpen);
+        
     }
     private void Awake()
     {
-        playerInput = new PlayerInputAction();
+        PlayerControls = new PlayerInputAction();
     }
     // Update is called once per frame
     void Update()
     {
-
+        
     }
     private void OnEnable()
     {
-        Button = playerInput.Player.Inventory;
+        Button=PlayerControls.UI.Inventory;
         Button.Enable();
         Button.performed += Toggle;
        
@@ -43,17 +44,42 @@ public class OpenUI : MonoBehaviour
     {
         if (isOpen)
         {
-            inventoryPanel.SetActive(false);
+            Time.timeScale = 1f;
+            inventoryPanel.SetActive(!isOpen);
             isOpen = false;
+           
+             
 
 
         }
         else
         {
-            inventoryPanel.SetActive(true);
+            inventoryPanel.SetActive(!isOpen);
             isOpen = true;
+            Time.timeScale = 0f;
+            
 
         }
 
+    }
+    public void ToggleClick()
+    {
+        if (isOpen)
+        {
+            Time.timeScale = 1f;
+            inventoryPanel.SetActive(!isOpen);
+            isOpen = false;
+            
+
+
+        }
+        else
+        {
+            inventoryPanel.SetActive(!isOpen);
+            isOpen = true;
+            Time.timeScale = 0f;
+            
+
+        }
     }
 }

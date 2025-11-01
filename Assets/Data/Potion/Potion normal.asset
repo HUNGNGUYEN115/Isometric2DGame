@@ -15,4 +15,6 @@ MonoBehaviour:
   itemname: HealthNormal
   itemtype: 0
   icon: {fileID: 927338625, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  info: This potion help increase the health of player immediately
   healamount: 5
+  potion: {fileID: 7362632469251311746, guid: 71767c916c5598b45b0a573ce3ee0862, type: 3}

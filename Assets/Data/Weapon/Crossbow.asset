@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a26a0bf52237874cb8b30710eadd097, type: 3}
   m_Name: Crossbow
   m_EditorClassIdentifier: 
-  itemname: 
-  itemtype: 0
+  itemname: Crossbow
+  itemtype: 1
   icon: {fileID: -762074860, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  info: Crossbow has more dame and shooting faster
   damage: 20
   bullet: {fileID: 7308793349900079891, guid: fe2a05f2bb2a19c418e2015e390757a0, type: 3}
+  shape: {fileID: 1772703093, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  gunprefab: {fileID: 3828442587733685280, guid: bbdff36873944534983313c5b7f9ccbb, type: 3}
