@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   //Transitions between 4 states
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -108,6 +108,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Patrol()
     {
+        //Move randomly
         if (currentTarget == null && patrolPoints.Length > 0)
             currentTarget = patrolPoints[Random.Range(0, patrolPoints.Length)];
 
@@ -121,7 +122,7 @@ public class EnemyAI : MonoBehaviour
         else if (agent.velocity.x < -0.1f)
             spriteRenderer.flipX = true;
 
-        // When reached patrol point → pick a new one
+        // When reached patrol point then pick a new one
         if (!agent.pathPending && agent.remainingDistance <= 0.2f)
         {
             Transform newTarget;
@@ -164,6 +165,7 @@ public class EnemyAI : MonoBehaviour
 
 
     }
+    //Pause 2s and countinue attack
     IEnumerator Afterattack()
     {
         

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a26a0bf52237874cb8b30710eadd097, type: 3}
+  m_Name: Thompson
+  m_EditorClassIdentifier: 
+  itemname: 'Thompson '
+  itemtype: 1
+  icon: {fileID: 563336626, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  info: Thompson is a strongest  gun in this game
+  damage: 30
+  bullet: {fileID: 941736271352224483, guid: 1fa0608dd96c1e14ebb7e25e49d51041, type: 3}
+  shape: {fileID: -144335857, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  gunprefab: {fileID: 336331522774463367, guid: 781441327f6e41f458da1d2836f7cb8d, type: 3}

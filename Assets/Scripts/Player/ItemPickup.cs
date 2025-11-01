@@ -33,7 +33,7 @@ public class ItemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Play in range");
+            
             playerInRange = true;
             playerInventory = other.GetComponent<InventorySystem>();
         }
@@ -45,7 +45,7 @@ public class ItemPickup : MonoBehaviour
         {
             
             playerInRange = false;
-            //playerInventory = null;
+           
         }
     }
 

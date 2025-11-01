@@ -38,11 +38,12 @@ public class PlayerAim : MonoBehaviour
         PlayerControls.Player.Fire.performed -= Fire;
         PlayerControls.Player.Disable();
     }
-
+    //Aim using the mouse potision
     void Aim(InputAction.CallbackContext context)
     {
         mousePos = context.ReadValue<Vector2>();
     }
+    
     void Fire(InputAction.CallbackContext context)
     {
         GameObject bullet=Instantiate(bulletPrefab,firepoint.position,firepoint.rotation * Quaternion.Euler(0f, 0f, -90f));
@@ -50,7 +51,7 @@ public class PlayerAim : MonoBehaviour
         rb.AddForce(firepoint.right*bulletSpeed,ForceMode2D.Impulse);
 
     }
-    // Update is called once per frame
+    
     private void Update()
     {
         Vector2 worldMouse = cam.ScreenToWorldPoint(mousePos);

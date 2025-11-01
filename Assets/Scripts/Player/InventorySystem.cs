@@ -40,7 +40,7 @@ public class InventorySystem : MonoBehaviour
                 }
             case Itemtype.Weapon:
                 {
-
+                    //Change the properties of the current gun
                     if (item is Weapon weapon)
                     {
                         gun.bulletPrefab = weapon.bullet;
@@ -59,7 +59,7 @@ public class InventorySystem : MonoBehaviour
         Items item = inventory[index];
         switch (item.itemtype)
         {
-
+            //Spawn items at the player's positon
             case Itemtype.Potion:
                 {
                     if (item is HealthPotion potion)

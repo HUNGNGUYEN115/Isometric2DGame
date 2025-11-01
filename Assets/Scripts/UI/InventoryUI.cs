@@ -45,6 +45,7 @@ public class InventoryUI : MonoBehaviour
 
        
     }
+    //Define the clicked slot is empmty
     public void SelectSlot(int index)
     {
         selectedslot = index;
@@ -66,6 +67,7 @@ public class InventoryUI : MonoBehaviour
 
         }
     }
+    //Use system set up
     public void UseSelectedItem()
     {
         inventorySystem.UseItem(selectedslot-1);
@@ -75,6 +77,7 @@ public class InventoryUI : MonoBehaviour
         dropButton.interactable = false;
 
     }
+    //Drop system set up
     public void DropSelectedItem()
     {
         inventorySystem.DropItem(selectedslot - 1);
@@ -84,11 +87,13 @@ public class InventoryUI : MonoBehaviour
         dropButton.interactable = false;
 
     }
-
+    //Hover setup
     public void ShowItemInfo(int index)
     {
         if (index < 0 || index >= inventorySystem.inventory.Count)
             return;
+           
+            
 
         inventorySystem.Infoitem(index);
         Infopanel.SetActive(true);
