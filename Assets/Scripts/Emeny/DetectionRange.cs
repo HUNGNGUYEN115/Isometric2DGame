@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DetectionRange : MonoBehaviour
 {
-    public EnemyAI enemy;
+    public EnemyStateManager enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

@@ -45,9 +45,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1818381958250709726}
+  - component: {fileID: 290335438533618087}
   - component: {fileID: 2494930535665413274}
   - component: {fileID: 422812592808793607}
-  - component: {fileID: 8979521344718581859}
   - component: {fileID: 1178058046599282607}
   - component: {fileID: 5873795250483410387}
   - component: {fileID: 477310049292407758}
@@ -76,6 +76,35 @@ Transform:
   - {fileID: 3141897779612053820}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &290335438533618087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058182576422206177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6cec5599a782645a102a9afb93d961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInRange: 0
+  speed: 2
+  attackRange: 1.5
+  player: {fileID: 0}
+  StateColor: {r: 1, g: 1, b: 1, a: 1}
+  patrolPoints: []
+  currentTarget: {fileID: 0}
+  agent: {fileID: 477310049292407758}
+  spriteRenderer: {fileID: 2494930535665413274}
+  isAttacking: 0
+  healthBar: {fileID: 6436339108994951348}
+  maxHealth: 40
+  isdead: 0
+  animator: {fileID: 422812592808793607}
+  Damage: 15
+  pushForce: 5
+  playerControllerComponent: {fileID: 0}
 --- !u!212 &2494930535665413274
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -153,33 +182,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8979521344718581859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058182576422206177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc31687f0a6ef7847b178d7c08f1a36a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 1
-  attackRange: 1.5
-  player: {fileID: 0}
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  playerInRange: 0
-  animator: {fileID: 422812592808793607}
-  playerControllers: {fileID: 0}
-  healthBar: {fileID: 6436339108994951348}
-  maxHealth: 50
-  isdead: 0
-  Damage: 7
 --- !u!50 &1178058046599282607
 Rigidbody2D:
   serializedVersion: 5
@@ -205,7 +207,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &5873795250483410387
 CapsuleCollider2D:
@@ -722,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76fec81d2d13c6a46b15d68b70ba1b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 8979521344718581859}
+  enemy: {fileID: 290335438533618087}
 --- !u!1 &5976506442708823095
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,99 +1,103 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using System;
-using UnityEngine.EventSystems;
-
 
 public class InventoryUI : MonoBehaviour
 {
     public InventorySystem inventorySystem;
+
     public Button useButton;
     public Button dropButton;
-    public List<Button> slotButtons;
+
+    public List<Button> slotButtons;     // 6 buttons
     public Sprite defaultSprite;
-    public int selectedslot;
+
+    public int selectedslot = -1;
     public GameObject Infopanel;
 
     private void OnEnable()
     {
-        if (inventorySystem != null)
-            inventorySystem.OnItemAdded += UpdateUI;
+        inventorySystem.OnItemChanged += RefreshSlot;
     }
 
     private void OnDisable()
     {
-        if (inventorySystem != null)
-            inventorySystem.OnItemAdded -= UpdateUI;
+        inventorySystem.OnItemChanged -= RefreshSlot;
     }
 
-    private void UpdateUI(Items newItem)
+    // --------------------------------------------
+    // Refresh ONE slot when item changes
+    // --------------------------------------------
+    private void RefreshSlot(Items item, int slotIndex)
     {
-        
+        Image img = slotButtons[slotIndex].GetComponent<Image>();
 
-        foreach (Button slot in slotButtons)
-        {
-            Image img = slot.GetComponent<Image>();
-            if (img.sprite == defaultSprite)
-            {
-                img.sprite = newItem.icon;
-                
-                return;
-            }
-        }
-
-       
+        if (item == null)
+            img.sprite = defaultSprite;
+        else
+            img.sprite = item.icon;
     }
-    //Define the clicked slot is empmty
+
+    // --------------------------------------------
+    // Player clicks a slot
+    // --------------------------------------------
     public void SelectSlot(int index)
     {
-        selectedslot = index;
+        selectedslot = index-1;
 
-        Image img = slotButtons[index-1].GetComponent<Image>();
-        if (img.sprite != null && img.sprite != defaultSprite)
-        {
-            useButton.interactable = true;
-            dropButton.interactable = true;
-            Infopanel.SetActive(true);
+        Items item = inventorySystem.inventory[index-1];
+        bool hasItem = item != null;
 
+        useButton.interactable = hasItem;
+        dropButton.interactable = hasItem;
+        Infopanel.SetActive(hasItem);
 
-        }
-        else
-        {
-            useButton.interactable = false;
-            dropButton.interactable = false;
-            Infopanel.SetActive(false);
-
-        }
+        if (hasItem)
+            inventorySystem.Infoitem(index-1);
     }
-    //Use system set up
+
+    // --------------------------------------------
+    // Use item
+    // --------------------------------------------
     public void UseSelectedItem()
     {
-        inventorySystem.UseItem(selectedslot-1);
-        Image img = slotButtons[selectedslot - 1].GetComponent<Image>();
-        img.sprite = defaultSprite;
+        if (selectedslot < 0) return;
+
+        inventorySystem.UseItem(selectedslot);
+
+        // UI will auto update from OnItemChanged
         useButton.interactable = false;
         dropButton.interactable = false;
-
     }
-    //Drop system set up
+
+    // --------------------------------------------
+    // Drop item
+    // --------------------------------------------
     public void DropSelectedItem()
     {
-        inventorySystem.DropItem(selectedslot - 1);
-        Image img = slotButtons[selectedslot - 1].GetComponent<Image>();
-        img.sprite = defaultSprite;
+        if (selectedslot < 0) return;
+
+        inventorySystem.DropItem(selectedslot);
+
         useButton.interactable = false;
         dropButton.interactable = false;
-
     }
-    //Hover setup
+
+    // --------------------------------------------
+    // Hover tooltip
+    // --------------------------------------------
     public void ShowItemInfo(int index)
     {
-        if (index < 0 || index >= inventorySystem.inventory.Count)
+        if (index < 0 || index >= inventorySystem.inventory.Length)
             return;
-           
-            
+
+        Items item = inventorySystem.inventory[index];
+
+        if (item == null)
+        {
+            Infopanel.SetActive(false);
+            return;
+        }
 
         inventorySystem.Infoitem(index);
         Infopanel.SetActive(true);
