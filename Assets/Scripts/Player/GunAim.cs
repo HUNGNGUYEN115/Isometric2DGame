@@ -9,6 +9,7 @@ public class PlayerAim : MonoBehaviour
     private Vector2 mousePos;
     private Camera cam;
     public SpriteRenderer playerRenderer;
+    public AudioClip bulletsound;
 
     //Firing
     public Transform firepoint;
@@ -47,6 +48,7 @@ public class PlayerAim : MonoBehaviour
     void Fire(InputAction.CallbackContext context)
     {
         GameObject bullet=Instantiate(bulletPrefab,firepoint.position,firepoint.rotation * Quaternion.Euler(0f, 0f, -90f));
+        SoundFXManager.Instance.PlaySound(bulletsound, transform);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firepoint.right*bulletSpeed,ForceMode2D.Impulse);
 

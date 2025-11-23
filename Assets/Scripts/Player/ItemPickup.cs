@@ -3,12 +3,13 @@ using UnityEngine.InputSystem;
 
 public class ItemPickup : MonoBehaviour
 {
-    public Items itemData; // Drag the ScriptableObject here
+    public Items itemData; 
     private bool playerInRange = false;
     public InventorySystem playerInventory;
 
     private PlayerInputAction playerInput;
     private InputAction interactAction;
+    
 
     private void Awake()
     {
@@ -53,6 +54,7 @@ public class ItemPickup : MonoBehaviour
     {
         if (playerInRange && playerInventory)
         {
+            //SoundFXManager.Instance.PlaySound(pickupsound, transform);
             playerInventory.AddItem(itemData);
             
             Destroy(gameObject);

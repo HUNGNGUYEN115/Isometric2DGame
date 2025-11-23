@@ -14,7 +14,8 @@ public class InventoryUI : MonoBehaviour
 
     public int selectedslot = -1;
     public GameObject Infopanel;
-
+    //FXSound
+    public AudioClip clipSound;
     private void OnEnable()
     {
         inventorySystem.OnItemChanged += RefreshSlot;
@@ -44,7 +45,7 @@ public class InventoryUI : MonoBehaviour
     public void SelectSlot(int index)
     {
         selectedslot = index-1;
-
+        SoundFXManager.Instance.PlaySound(clipSound, transform);
         Items item = inventorySystem.inventory[index-1];
         bool hasItem = item != null;
 
@@ -62,7 +63,7 @@ public class InventoryUI : MonoBehaviour
     public void UseSelectedItem()
     {
         if (selectedslot < 0) return;
-
+        SoundFXManager.Instance.PlaySound(clipSound, transform);
         inventorySystem.UseItem(selectedslot);
 
         // UI will auto update from OnItemChanged
@@ -76,7 +77,7 @@ public class InventoryUI : MonoBehaviour
     public void DropSelectedItem()
     {
         if (selectedslot < 0) return;
-
+        SoundFXManager.Instance.PlaySound(clipSound, transform);
         inventorySystem.DropItem(selectedslot);
 
         useButton.interactable = false;

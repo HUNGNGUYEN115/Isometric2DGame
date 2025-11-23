@@ -21,7 +21,7 @@ public class PatrolState : EnemyBaseState
             Enemy.spriteRenderer.color = Color.white;
             if (Enemy.currentTarget == null && Enemy.patrolPoints.Length > 0)
                 Enemy.currentTarget = Enemy.patrolPoints[Random.Range(0, Enemy.patrolPoints.Length)];
-
+            Enemy.agent.ResetPath();
             Enemy.agent.isStopped = false;
             Enemy.agent.speed = Enemy.speed;
             Enemy.agent.SetDestination(Enemy.currentTarget.position);

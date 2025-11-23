@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using static EnemyAI;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class EnemyStateManager : MonoBehaviour
 {
@@ -40,6 +41,14 @@ public class EnemyStateManager : MonoBehaviour
     public int Damage = 10;
     public float pushForce = 5f;
     public PlayerControllers playerControllerComponent;
+
+    //VFX
+    public GameObject attackVFXPrefab;
+    public GameObject attackbulletVFXPrefab;
+    //FX Sound
+    public AudioClip hitsound;
+
+
     void Start()
     {
         //Change colors with hex code
@@ -77,8 +86,16 @@ public class EnemyStateManager : MonoBehaviour
         if (other.CompareTag("Bullet"))
         {
             animator.SetBool("Hit", true);
+            SoundFXManager.Instance.PlaySound(hitsound, transform);
+            GameObject vfx = Instantiate(
+            attackbulletVFXPrefab,
+            other.transform.position,
+            Quaternion.identity
+        );
+            
             Destroy(other.gameObject);
             TakeDamage(playerControllerComponent.damage);
+            Destroy(vfx,0.25f);
         }
 
     }

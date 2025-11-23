@@ -32,6 +32,7 @@ public class ChaseState : EnemyBaseState
             if (distanceToPlayer < Enemy.attackRange)
             {
                 Enemy.SwitchState(Enemy.attackstate);
+                
             }
         }
         else

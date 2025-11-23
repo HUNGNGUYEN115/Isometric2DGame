@@ -10,12 +10,12 @@ public class InventorySystem : MonoBehaviour
 
     public Action<Items, int> OnItemChanged;         // Notifies UI which slot changed
     public TextMeshProUGUI text;                     // For showing item info
-
-    // ---------------------------
-    // Add Item
-    // ---------------------------
+    //FXSuond
+    public AudioClip pickupsound;
+ 
     public void AddItem(Items newItem)
     {
+        SoundFXManager.Instance.PlaySound(pickupsound, transform);
         for (int i = 0; i < inventory.Length; i++)
         {
             if (inventory[i] == null)
